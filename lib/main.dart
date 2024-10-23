@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wolf_sport/pages/categoria_page.dart';
+import 'package:wolf_sport/pages/home_page.dart';
 import 'package:wolf_sport/pages/login_page.dart';
 
 void main() => runApp(MyApp());
@@ -9,24 +11,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Productos',
+      title: 'Wolf-Sport',
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
         'login':(context) => LoginPage(),
+        'home':(context) => HomePage(),
+        'categoria':(context) => CategoriaPage()
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],
-          appBarTheme: AppBarTheme(
+          appBarTheme: const AppBarTheme(
             elevation: 0,
             color: Colors.indigo,
             foregroundColor: Colors.white
           ),
-          floatingActionButtonTheme: FloatingActionButtonThemeData(
+          /*floatingActionButtonTheme: const FloatingActionButtonThemeData(
             elevation: 0,
             backgroundColor: Colors.indigo,
             foregroundColor: Colors.white
-          )
+          )*/
       ),
     );
   }

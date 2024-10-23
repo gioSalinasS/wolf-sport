@@ -14,23 +14,23 @@ class CardContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(25.0),
       ),
       margin: const EdgeInsets.all(10.0), 
-      child: Column(
+      child: const Column(
         children: [
-          const Padding(padding: EdgeInsets.only(top: 10.0)),
+          Padding(padding: EdgeInsets.only(top: 10.0)),
           _Indicadores(),
-          const Divider(
+          Divider(
             thickness: 10.0,
             color: Color.fromARGB(255, 90, 18, 118),
             height: 10.0,
             indent: 20.0,
             endIndent: 20.0,
           ),
-          const SizedBox(height: 10.0,),
+          SizedBox(height: 10.0,),
           _CamposInicio(),
-          const SizedBox(height: 10.0,),
-          const Divider(),
+          SizedBox(height: 10.0,),
+          Divider(),
           _BotonInicio(),
-          const SizedBox(height: 20.0,),
+          SizedBox(height: 20.0,),
         ],
       ),
     );
@@ -114,7 +114,7 @@ class _Indicadores extends StatelessWidget {
         ),
         const SizedBox(height: 20.0,),
         Text(
-          "Bienvenido a Wolf-Sport".toUpperCase(),
+          "Wolf - Sport".toUpperCase(),
           textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 30.0,
@@ -144,7 +144,9 @@ class _BotonInicio extends StatelessWidget {
           backgroundColor:const Color.fromARGB(128, 81, 1, 101),
           padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
           elevation: 20.0
-        ),onPressed: () => {},
+        ),onPressed: () => {
+          Navigator.pushNamed(context, 'home')
+        },
         child: Text(
           "Iniciar sesión".toUpperCase(),
           style:const TextStyle(

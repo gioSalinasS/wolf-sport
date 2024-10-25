@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wolf_sport/widgets/card_categorias.dart';
+import 'package:wolf_sport/pages/form_page.dart'; 
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -24,12 +25,12 @@ class HomePage extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 15,),
+                    SizedBox(height: 15),
                     Text(
                       'Bienvenido:',
                       style: TextStyle(
                         fontSize: 30,
-                        color: Colors.white
+                        color: Colors.white,
                       ),
                     ),
                     Text(
@@ -61,12 +62,15 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-    floatingActionButton: FloatingActionButton(
-      child: Icon(Icons.add),
-      onPressed: () {
-        
-      },
-    ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const FormPage()), 
+          );
+        },
+      ),
     );
   }
 }

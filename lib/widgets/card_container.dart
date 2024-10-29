@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wolf_sport/pages/home_page.dart';
 
 class CardContainer extends StatelessWidget {
   const CardContainer({super.key});
@@ -145,7 +146,7 @@ class _BotonInicio extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
           elevation: 20.0
         ),onPressed: () => {
-          Navigator.pushNamed(context, 'home')
+          Navigator.pushReplacementNamed(context, 'home')
         },
         child: Text(
           "Iniciar sesión".toUpperCase(),

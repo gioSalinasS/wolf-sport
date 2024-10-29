@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
         child: AppBar(
           flexibleSpace: Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
+            width: double.infinity,
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,14 +30,14 @@ class HomePage extends StatelessWidget {
                     Text(
                       'Bienvenido:',
                       style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 20,
                         color: Colors.white,
                       ),
                     ),
                     Text(
                       'Nombre del profesor',
                       style: TextStyle(
-                        fontSize: 35,
+                        fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),

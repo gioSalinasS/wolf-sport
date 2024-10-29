@@ -9,25 +9,27 @@ class CategoriaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Lista de asistencia"),
       ),
-      body: Column(
-        children: [
-          AlumnoCheckboxList(),
-          Container(
-            padding: EdgeInsets.only(right: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text("Enviar lista"),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-          
-                  },
-                ),
-              ],
-            ),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            AlumnoCheckboxList(),
+            Container(
+              padding: EdgeInsets.only(right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text("Enviar lista"),
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () {
+            
+                    },
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

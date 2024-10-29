@@ -37,7 +37,7 @@ class CardCategorias extends StatelessWidget {
               left: 50,
               child: Container(
                 padding: EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width*0.6,
+                width: MediaQuery.of(context).size.width*0.7,
                 height: 50,
                 child: const Text(
                   "El verdadero desafío no es vencer al rival, sino superarnos a nosotros mismos",
@@ -47,18 +47,18 @@ class CardCategorias extends StatelessWidget {
                 ),
               )
             ),
-            Positioned(
+            /*Positioned(
               bottom: 50,
               right: 50,
               child: Container(
                 padding: const EdgeInsets.all(5),
-                width: 50,
+                width: MediaQuery.of(context).size.width*0.5,
                 child: const Icon(
                   Icons.person_pin,
                   size: 40,
                 )
               )
-            ),
+            ),*/
             Positioned(
               bottom: 115,
               child: Container(
@@ -137,9 +137,9 @@ class _ImagenProf extends StatelessWidget {
         ),
         boxShadow: const [
           BoxShadow(
-            blurRadius: 10,
+            blurRadius: 5,
             blurStyle: BlurStyle.solid,
-            offset: Offset(0,10),
+            offset: Offset(0,5),
           )
         ],
         shape: BoxShape.circle,
@@ -148,68 +148,6 @@ class _ImagenProf extends StatelessWidget {
         )
       ),
       child: Icon(Icons.person_pin, size: 50,),
-    );
-  }
-}
-
-class _PurpleBox extends StatelessWidget {
-  //const _PurpleBox({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Container(
-      width: double.infinity,
-      height: size.height * 0.4,
-      //color: Colors.indigo,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.white,
-            Colors.indigo
-          ]
-        )
-      ),
-      child: const Stack(
-        children: [
-          Positioned(
-            top: 90,
-            left: 30,
-            child: _Esfera(),
-          ),
-          Positioned(
-            top: 150,
-            right: 50,
-            child: _Esfera(),
-          ),
-          Positioned(
-            top: 80,
-            left: 150,
-            child: _Esfera(),
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: _Esfera(),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _Esfera extends StatelessWidget {
-  const _Esfera({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(100),
-        color:const Color.fromRGBO(255, 255, 255, 0.05)
-      ),
     );
   }
 }

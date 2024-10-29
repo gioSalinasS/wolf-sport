@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wolf_sport/pages/home_page.dart';
 
 class CardContainer extends StatelessWidget {
   const CardContainer({super.key});

@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+//import 'package:provider/provider.dart';
+//import 'package:wolf_sport/services/alumno_service.dart';
 
 class CardCategorias extends StatelessWidget {
-  const CardCategorias({super.key});
+  final String nombre;
+  const CardCategorias({super.key, required this.nombre});
+
 
   @override
   Widget build(BuildContext context) {
+
+    //final alumnoService = Provider.of<AlumnoService>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(
@@ -26,11 +33,11 @@ class CardCategorias extends StatelessWidget {
           //alignment: Alignment.bottomLeft,
           children: [
             //_PurpleBox(),
-            _NombreCategoria(),
+            _NombreCategoria(nombre: nombre,),
             Positioned(
               top: 10,
               right: 50,
-              child: _ImagenProf()
+              child: _Logo()
             ),
             Positioned(
               bottom: 50,
@@ -47,18 +54,6 @@ class CardCategorias extends StatelessWidget {
                 ),
               )
             ),
-            /*Positioned(
-              bottom: 50,
-              right: 50,
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                width: MediaQuery.of(context).size.width*0.5,
-                child: const Icon(
-                  Icons.person_pin,
-                  size: 40,
-                )
-              )
-            ),*/
             Positioned(
               bottom: 115,
               child: Container(
@@ -75,7 +70,8 @@ class CardCategorias extends StatelessWidget {
 }
 
 class _NombreCategoria extends StatelessWidget {
-  const _NombreCategoria({super.key});
+  final String nombre;
+  const _NombreCategoria({super.key, required this.nombre});
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +84,8 @@ class _NombreCategoria extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.indigo,
-              Colors.white
+              Color.fromARGB(255, 70, 113, 148),
+              Colors.blue,
             ]
           ),
           borderRadius: BorderRadius.only(
@@ -97,10 +93,11 @@ class _NombreCategoria extends StatelessWidget {
             topRight: Radius.circular(5)
           ),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Categoria recreativa",
+            const SizedBox(height: 15,),
+            Text("Categoria $nombre",
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.white,
@@ -109,13 +106,6 @@ class _NombreCategoria extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
-            SizedBox(height: 15,),
-            Text("Edad",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.white
-              ),
-            )
           ],
         ),
       ),
@@ -123,8 +113,8 @@ class _NombreCategoria extends StatelessWidget {
   }
 }
 
-class _ImagenProf extends StatelessWidget {
-  const _ImagenProf({super.key});
+class _Logo extends StatelessWidget {
+  const _Logo({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +137,7 @@ class _ImagenProf extends StatelessWidget {
           width: 2
         )
       ),
-      child: Icon(Icons.person_pin, size: 50,),
+      child: Image.asset('assets/wolf_card.png')
     );
   }
 }

@@ -6,7 +6,7 @@ class CardContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      shadowColor:Color.fromARGB(255, 130, 11, 151),
+      shadowColor: Color.fromARGB(255, 19, 138, 202),//Color.fromARGB(167, 130, 11, 151),
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer, 
       color:Color.fromARGB(146, 168, 189, 247),
@@ -20,7 +20,7 @@ class CardContainer extends StatelessWidget {
           _Indicadores(),
           Divider(
             thickness: 10.0,
-            color: Color.fromARGB(255, 90, 18, 118),
+            color: Colors.white70,
             height: 10.0,
             indent: 20.0,
             endIndent: 20.0,
@@ -93,7 +93,7 @@ class _Indicadores extends StatelessWidget {
           height: 200,
           decoration:  BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Colors.blue,Colors.purple,]
+              colors: [Colors.blue,Colors.white,]
             ),
             boxShadow: const [
               BoxShadow(
@@ -141,7 +141,7 @@ class _BotonInicio extends StatelessWidget {
           side: const BorderSide(
             style: BorderStyle.none,
           ),
-          backgroundColor:const Color.fromARGB(128, 81, 1, 101),
+          backgroundColor: Color.fromARGB(167, 5, 120, 182), //Color.fromARGB(129, 90, 18, 118),
           padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
           elevation: 20.0
         ),onPressed: () => {

@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wolf_sport/pages/categoria_page.dart';
 import 'package:wolf_sport/pages/home_page.dart';
 import 'package:wolf_sport/pages/login_page.dart';
+import 'package:wolf_sport/services/alumno_service.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(AppState());
+
+class AppState extends StatelessWidget {
+  //const AppState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AlumnoService())
+      ],
+      child: MyApp(),
+    );
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -17,8 +17,8 @@ class AlumnoService extends ChangeNotifier{
   Alumno? alumnoSeleccionado;
 
   AlumnoService(){
-    this.obtenerCategorias();
-    this.obtenerAlumnosCat();
+    obtenerCategorias();
+    obtenerAlumnos();
   }
 
   //funcion para obtener categorias
@@ -44,28 +44,27 @@ class AlumnoService extends ChangeNotifier{
   }
 
   //obtener alumnos
-  Future obtenerAlumnosCat() async{
-    this.isLoading = true;
+  Future obtenerAlumnos() async{
+    isLoading = true;
     notifyListeners();
-    final url = Uri.https(_baseUrl,'/infantil/alumnos.json');
+    
+    final url = Uri.https(_baseUrl,'infantil/alumnos.json');
     final resp = await http.get(url);
 
-    //final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
     final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
 
     alumnosMap.forEach((key, value) {
-      final temAlumno = Alumno.fromJson(value);
-      temAlumno.id = key;
-      alumnos.add(temAlumno);
+      final tempAl = Alumno.fromJson(value);
+      tempAl.id = key;
+      alumnos.add(tempAl);
     });
-
     isLoading = false;
     notifyListeners();
     return alumnos;
   }
 
   //método para actualizar un alumno
-  Future<String> updateAlumno(Alumno alumno) async{
+  /*Future<String> updateAlumno(Alumno alumno) async{
     final url = Uri.https(_baseUrl,'infantil/alumnos/${alumno.id}.json');
     final resp = await http.put(url,body: alumno.toJson());
 
@@ -78,10 +77,10 @@ class AlumnoService extends ChangeNotifier{
     alumnos[index]=alumno;
 
     return alumno.id!;
-  }
+  }*/
 
   //método para crear o actualizar 
-  Future saveOrCreateAlumno (Alumno alumno) async{
+  /*Future saveOrCreateAlumno (Alumno alumno) async{
     isSaving = true;
     notifyListeners();
 
@@ -92,10 +91,10 @@ class AlumnoService extends ChangeNotifier{
     }
     isSaving = false;
     notifyListeners();
-  }
+  }*/
 
   //método para agregar un nuevo alumno
-  Future<String> nuevoAlumno(Alumno alumno) async{
+  /*Future<String> nuevoAlumno(Alumno alumno) async{
     final url = Uri.https(_baseUrl,'infantil/alumnos.json');
     final resp = await http.post(url, body: alumno.toJson());
     final decodedData = json.decode(resp.body);
@@ -104,7 +103,7 @@ class AlumnoService extends ChangeNotifier{
     alumnos.add(alumno);
 
     return alumno.id!;
-  }
+  }*/
 
 
 

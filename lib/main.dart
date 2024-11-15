@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wolf_sport/pages/categoria_page.dart';
+//import 'package:wolf_sport/pages/categoria_page.dart';
 import 'package:wolf_sport/pages/home_page.dart';
 import 'package:wolf_sport/pages/login_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login':(context) => LoginPage(),
         'home':(context) => HomePage(),
-        'categoria':(context) => CategoriaPage()
+        //'categoria':(context) => CategoriaPage(nombreCat: "",)
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],

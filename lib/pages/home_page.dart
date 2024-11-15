@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wolf_sport/pages/categoria_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
 import 'package:wolf_sport/widgets/card_categorias.dart';
 import 'package:wolf_sport/pages/form_page.dart'; 
@@ -91,7 +92,7 @@ class HomePage extends StatelessWidget {
             return  GestureDetector(
               onTap: () => {
                 //alumnoService.alumnoSeleccionado = alumnoService.alumnos[index],
-                Navigator.pushNamed(context, 'categoria'),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoriaPage(nombreCat: nombreCategoria),)),
               },
               child: Column(
                 children: [

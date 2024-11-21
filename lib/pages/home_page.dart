@@ -4,11 +4,22 @@ import 'package:wolf_sport/pages/categoria_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
 import 'package:wolf_sport/widgets/card_categorias.dart';
 import 'package:wolf_sport/pages/form_page.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
 
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  void _cerrarSesion()async{
+     setState(() {});
+     await FirebaseAuth.instance.signOut(); 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +61,16 @@ class HomePage extends StatelessWidget {
                   )
                 ]
               ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 40,
                     backgroundImage: AssetImage('assets/wolf.png'),
                   ),
-                  SizedBox(width: 10),
-                  Column(
+                  const SizedBox(width: 10),
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: 15),
@@ -80,6 +91,13 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
+                  IconButton(
+                    icon: const Icon(Icons.logout),
+                    iconSize: 40,
+                    onPressed: () async{
+                      _cerrarSesion();
+                    },
+                  )
                 ],
               ),
             ),

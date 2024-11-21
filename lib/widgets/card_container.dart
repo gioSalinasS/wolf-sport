@@ -1,53 +1,234 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class CardContainer extends StatelessWidget {
+class CardContainer extends StatefulWidget {
   const CardContainer({super.key});
+
+  @override
+  State<CardContainer> createState() => _CardContainerState();
+}
+
+class _CardContainerState extends State<CardContainer> {
+
+  
+  String mensaje="";
+  final correoUsu = TextEditingController();
+  final passController = TextEditingController();
+
+  void iniciarSesion() async{
+    
+    showDialog(
+      context: context,
+      builder: ((context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      })
+    );
+  try{
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: correoUsu.text,
+      password: passController.text
+    );
+    Navigator.pop(context);
+  }on FirebaseAuthException catch(e){
+    Navigator.pop(context);
+    print(e);
+    if(e.code == 'channel-error'){
+      _isEmpty();
+    }
+    if(e.code == 'user-not-found'){
+      _correoInva();
+    }
+    if(e.code == 'invalid-email'){
+      _fomatInco();
+    }
+    if(e.code == 'wrong-password'){
+      _passInva();
+    }
+    if(e.code == 'network-request-failed'){
+      _probRed();
+    }
+  }
+
+  }
+
+  void _isEmpty(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        Radius borde = const Radius.circular(20.0);
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(183, 168, 189, 247),
+          elevation: 10,
+          iconColor: const Color.fromARGB(255, 255, 255, 255),
+          icon:const  Icon(Icons.error,size: 50,),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(borde)),
+          titleTextStyle: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+          contentTextStyle: const TextStyle(color: Colors.white,fontSize: 15),
+          title: const Text("-- Sin datos --"),
+          content: const Text("Algún campo esta en blanco, favor de llenarlo como es debido"),
+        );
+      },
+    );
+  }
+
+  void _correoInva(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        Radius borde = const Radius.circular(20.0);
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(183, 168, 189, 247),
+          elevation: 10,
+          iconColor: const Color.fromARGB(255, 255, 255, 255),
+          icon:const  Icon(Icons.error),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(borde)),
+          titleTextStyle: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+          contentTextStyle: const TextStyle(color: Colors.white,fontSize: 15),
+          title: const Text("Correo inválido"),
+          content: const Text("El correo no se encuentra registrado"),
+        );
+      },
+    );
+  }
+
+  void _probRed(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        Radius borde = const Radius.circular(20.0);
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(183, 168, 189, 247),
+          elevation: 10,
+          iconColor: const Color.fromARGB(255, 255, 255, 255),
+          icon:const  Icon(Icons.error),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(borde)),
+          titleTextStyle: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+          contentTextStyle: const TextStyle(color: Colors.white,fontSize: 15),
+          title: const Text("Problema de conexión"),
+          content: const Text("La conexion de red es inestable"),
+        );
+      },
+    );
+  }
+
+
+  void _fomatInco(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        Radius borde = const Radius.circular(20.0);
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(183, 168, 189, 247),
+          elevation: 10,
+          iconColor: const Color.fromARGB(255, 255, 255, 255),
+          icon:const  Icon(Icons.error),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(borde)),
+          titleTextStyle: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+          contentTextStyle: const TextStyle(color: Colors.white,fontSize: 15),
+          title: const Text("Formato de correo incorrecto"),
+          content: const Text("Favor de ingresar un correo válido"),
+        );
+      },
+    );
+  }
+
+  void _passInva(){
+    showDialog(
+      context: context,
+      builder: (context) {
+        Radius borde = const Radius.circular(20.0);
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(183, 168, 189, 247),
+          elevation: 10,
+          iconColor: const Color.fromARGB(255, 255, 255, 255),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(borde)),
+          titleTextStyle: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),
+          contentTextStyle: const TextStyle(color: Colors.white,fontSize: 15),
+          icon: const Icon(Icons.error),
+          title: const Text("Contraseña incorrecta"),
+          content: const Text("La contraseña no coincide"),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    correoUsu.dispose();
+    passController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      shadowColor: Color.fromARGB(255, 19, 138, 202),//Color.fromARGB(167, 130, 11, 151),
+      shadowColor: const Color.fromARGB(255, 19, 138, 202),//Color.fromARGB(167, 130, 11, 151),
       semanticContainer: true,
       clipBehavior: Clip.antiAliasWithSaveLayer, 
-      color:Color.fromARGB(146, 168, 189, 247),
+      color:const Color.fromARGB(146, 168, 189, 247),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25.0),
       ),
       margin: const EdgeInsets.all(10.0), 
-      child: const Column(
+      child: Column(
         children: [
-          Padding(padding: EdgeInsets.only(top: 10.0)),
-          _Indicadores(),
-          Divider(
+          const Padding(padding: EdgeInsets.only(top: 10.0)),
+          const _Indicadores(),
+          const Divider(
             thickness: 10.0,
             color: Colors.white70,
             height: 10.0,
             indent: 20.0,
             endIndent: 20.0,
           ),
-          SizedBox(height: 10.0,),
-          _CamposInicio(),
-          SizedBox(height: 10.0,),
-          Divider(),
-          _BotonInicio(),
-          SizedBox(height: 20.0,),
+          const SizedBox(height: 10.0,),
+          camposInicio(context),
+          const SizedBox(height: 10.0,),
+          const Divider(),
+          botonInicio(context),
+          const SizedBox(height: 20.0,),
         ],
       ),
     );
   }
-}
 
-class _CamposInicio extends StatelessWidget {
-  const _CamposInicio({super.key});
+  Widget botonInicio(BuildContext context){
+    return Container(
+      margin: EdgeInsets.all(10),
+      child: ElevatedButton(
+        style: TextButton.styleFrom(
+          side: const BorderSide(
+            style: BorderStyle.none,
+          ),
+          backgroundColor: Color.fromARGB(167, 5, 120, 182), //Color.fromARGB(129, 90, 18, 118),
+          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
+          elevation: 20.0
+        ),onPressed: () => {
+          iniciarSesion(),
+        },
+        child: Text(
+          "Iniciar sesión".toUpperCase(),
+          style:const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
+        ),
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget camposInicio(BuildContext context){
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
       child: Form(
         child: Column(
           children: [
             TextFormField(              
+              controller: correoUsu,
               keyboardType: TextInputType.emailAddress,
               keyboardAppearance: Brightness.dark,
               decoration: InputDecoration(
@@ -62,6 +243,7 @@ class _CamposInicio extends StatelessWidget {
             ),
             const SizedBox(height: 10.0,),
             TextFormField(
+              controller: passController,
               obscureText: true,
               decoration: InputDecoration(
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
@@ -78,6 +260,7 @@ class _CamposInicio extends StatelessWidget {
       ),
     );
   }
+
 }
 
 class _Indicadores extends StatelessWidget {
@@ -126,35 +309,5 @@ class _Indicadores extends StatelessWidget {
       ],
     ),
   );
-  }
-}
-
-class _BotonInicio extends StatelessWidget {
-  const _BotonInicio({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: ElevatedButton(
-        style: TextButton.styleFrom(
-          side: const BorderSide(
-            style: BorderStyle.none,
-          ),
-          backgroundColor: Color.fromARGB(167, 5, 120, 182), //Color.fromARGB(129, 90, 18, 118),
-          padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 10),
-          elevation: 20.0
-        ),onPressed: () => {
-          Navigator.pushReplacementNamed(context, 'home')
-        },
-        child: Text(
-          "Iniciar sesión".toUpperCase(),
-          style:const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-      ),
-    );
   }
 }

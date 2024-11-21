@@ -1,11 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-//import 'package:wolf_sport/pages/categoria_page.dart';
+import 'package:wolf_sport/pages/auth_page.dart';
 import 'package:wolf_sport/pages/home_page.dart';
 import 'package:wolf_sport/pages/login_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
 
-void main() => runApp(AppState());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp();
+  runApp(AppState());
+}
 
 class AppState extends StatelessWidget {
   //const AppState({super.key});
@@ -29,11 +34,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Wolf-Sport',
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'auth',
       routes: {
+        'auth':(context) => AuthPage(),
         'login':(context) => LoginPage(),
         'home':(context) => HomePage(),
         //'categoria':(context) => CategoriaPage(nombreCat: "",)
+      },
+      onGenerateRoute: (settings){
+        return MaterialPageRoute(
+          builder: (context) => const LoginPage()
+        );
       },
       theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor: Colors.grey[300],

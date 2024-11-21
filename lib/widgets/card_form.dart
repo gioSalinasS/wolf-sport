@@ -228,9 +228,8 @@ class __CamposInicioState extends State<_CamposInicio> {
             filled: true,
           ),
           items: const [
-            DropdownMenuItem(value: "Futbol", child: Text("Futbol")),
-            DropdownMenuItem(value: "Natacion", child: Text("Natacion")),
-            DropdownMenuItem(value: "Baloncesto", child: Text("Baloncesto")),
+            DropdownMenuItem(value: "infantil", child: Text("Infantil")),
+            DropdownMenuItem(value: "junior", child: Text("Junior")),
           ],
           onChanged: (value) {},
           validator: (value) => value == null ? 'Campo requerido' : null,

@@ -15,7 +15,7 @@ class AlumnoService extends ChangeNotifier{
   bool isLoading=true;
   bool isSaving =false;
 
-  Alumno? alumnoSeleccionado;
+  //Alumno? alumnoSeleccionado;
 
   AlumnoService(){
     obtenerCategorias();
@@ -56,7 +56,7 @@ class AlumnoService extends ChangeNotifier{
     final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
 
     alumnosMap.forEach((key, value) {
-      final tempAl = Alumno.fromJson(value);
+      final tempAl = Alumno.fromMap(value);
       tempAl.id = key;
       alumnosInfantil.add(tempAl);
     });
@@ -76,7 +76,7 @@ class AlumnoService extends ChangeNotifier{
     final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
 
     alumnosMap.forEach((key, value) {
-      final tempAl = Alumno.fromJson(value);
+      final tempAl = Alumno.fromMap(value);
       tempAl.id = key;
       alumnosJunior.add(tempAl);
     });
@@ -85,35 +85,57 @@ class AlumnoService extends ChangeNotifier{
     return alumnosJunior;
   }
 
-  //método para actualizar un alumno
-  /*Future<String> updateAlumno(Alumno alumno) async{
-    final url = Uri.https(_baseUrl,'infantil/alumnos/${alumno.id}.json');
-    final resp = await http.put(url,body: alumno.toJson());
+  //Actualizar asistencia
+  Future<String> updateAsistencia(Alumno alumno) async {
+    final url = Uri.https(_baseUrl, '/infantil/alumnos/${alumno.id}.json');
+    final resp = await http.patch(
+      url,
+      body: json.encode({
+        'asistencias': alumno.asistencias,
+      }),
+    );
 
-    final decodedData = resp.body;
-    print(decodedData);
+    // Decodifica la respuesta
+    if (resp.statusCode == 200) {
+      final decodedData = json.decode(resp.body);
+      print('Asistencia actualizada: $decodedData');
+      return alumno.id!;
+    } else {
+      throw Exception('Error al actualizar la asistencia: ${resp.statusCode}');
+    }
+  }
 
-    final index =
-      alumnos.indexWhere((element) => element.id == alumno.id);
+  //Actualizar asistencia
+  Future<String> updateAsistenciaJunior(Alumno alumno) async {
+    final url = Uri.https(_baseUrl, '/junior/alumnos/${alumno.id}.json');
+    final resp = await http.patch(
+      url,
+      body: json.encode({
+        'asistencias': alumno.asistencias,
+      }),
+    );
 
-    alumnos[index]=alumno;
-
-    return alumno.id!;
-  }*/
+    // Decodifica la respuesta
+    if (resp.statusCode == 200) {
+      final decodedData = json.decode(resp.body);
+      print('Asistencia actualizada: $decodedData');
+      return alumno.id!;
+    } else {
+      throw Exception('Error al actualizar la asistencia: ${resp.statusCode}');
+    }
+  }
 
   //método para crear o actualizar 
-  /*Future saveOrCreateAlumno (Alumno alumno) async{
+  Future saveOrCreateAlumno (Alumno alumno) async{
     isSaving = true;
     notifyListeners();
 
-    if(alumno.id == null){
-      await nuevoAlumno(alumno);
-    }else{
-      await updateAlumno(alumno);
+    if(alumno.id != null){
+      await updateAsistencia(alumno);
     }
     isSaving = false;
     notifyListeners();
-  }*/
+  }
 
   //método para agregar un nuevo alumno
   /*Future<String> nuevoAlumno(Alumno alumno) async{
@@ -122,7 +144,7 @@ class AlumnoService extends ChangeNotifier{
     final decodedData = json.decode(resp.body);
 
     alumno.id = decodedData['name'];
-    alumnos.add(alumno);
+    alumnosInfantil.add(alumno);
 
     return alumno.id!;
   }*/

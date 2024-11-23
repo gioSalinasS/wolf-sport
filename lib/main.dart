@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wolf_sport/pages/auth_page.dart';
 import 'package:wolf_sport/pages/home_page.dart';
+import 'package:wolf_sport/pages/home_page_admin.dart';
 import 'package:wolf_sport/pages/login_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
 
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         'login':(context) => LoginPage(),
         'home':(context) => HomePage(),
         //'categoria':(context) => CategoriaPage(nombreCat: "",)
+        'admin':(context)=>HomePageAdmin()
       },
       onGenerateRoute: (settings){
         return MaterialPageRoute(

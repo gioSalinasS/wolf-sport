@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:wolf_sport/pages/categoria_page.dart';
+import 'package:wolf_sport/pages/categoria_page_admin.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
 import 'package:wolf_sport/widgets/card_categorias.dart';
+import 'package:wolf_sport/pages/form_page.dart'; 
 import 'package:firebase_auth/firebase_auth.dart';
 
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePageAdmin extends StatefulWidget {
+  const HomePageAdmin({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePageAdmin> createState() => _HomePageAdminState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageAdminState extends State<HomePageAdmin> {
 
   void _cerrarSesion()async{
-    try {
+     try {
     await FirebaseAuth.instance.signOut();
 
     // Redirige a la página de inicio de sesión
@@ -43,9 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    final alumnoService = Provider.of<AlumnoService>(context);  
-
+    final alumnoService = Provider.of<AlumnoService>(context);
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
@@ -127,7 +126,7 @@ class _HomePageState extends State<HomePage> {
             return  GestureDetector(
               onTap: () => {
                 //alumnoService.alumnoSeleccionado = alumnoService.alumnos[index],
-                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoriaPage(nombreCat: nombreCategoria),)),
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CategoriaPageAdmin(nombreCat: nombreCategoria,))),
               },
               child: Column(
                 children: [
@@ -136,6 +135,15 @@ class _HomePageState extends State<HomePage> {
               ),
             );
           }
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const FormPage()), 
+            );
+          },
         ),
       ),
     );

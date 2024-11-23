@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
 
-class CardCategorias extends StatelessWidget {
+class CardCategoriasAdmin extends StatelessWidget {
   final String nombre;
-  const CardCategorias({super.key, required this.nombre});
-
+  const CardCategoriasAdmin({super.key, required this.nombre});
 
   @override
   Widget build(BuildContext context) {
-
-    //final alumnoService = Provider.of<AlumnoService>(context);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Container(

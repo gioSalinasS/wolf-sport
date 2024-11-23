@@ -15,43 +15,45 @@ class _CardContainerState extends State<CardContainer> {
   final correoUsu = TextEditingController();
   final passController = TextEditingController();
 
-  void iniciarSesion() async{
-    
-    showDialog(
-      context: context,
-      builder: ((context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      })
-    );
-  try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: correoUsu.text,
-      password: passController.text
-    );
-    Navigator.pop(context);
-  }on FirebaseAuthException catch(e){
-    Navigator.pop(context);
-    print(e);
-    if(e.code == 'channel-error'){
-      _isEmpty();
-    }
-    if(e.code == 'user-not-found'){
-      _correoInva();
-    }
-    if(e.code == 'invalid-email'){
-      _fomatInco();
-    }
-    if(e.code == 'wrong-password'){
-      _passInva();
-    }
-    if(e.code == 'network-request-failed'){
-      _probRed();
-    }
-  }
+  void iniciarSesion() async {
+  // Mostrar indicador de carga
+  showDialog(
+    context: context,
+    builder: (_) => const Center(
+      child: CircularProgressIndicator(),
+    ),
+  );
 
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: correoUsu.text,
+      password: passController.text,
+    );
+
+    Navigator.pop(context);
+    String email = userCredential.user!.email ?? "";
+    if (email.contains("giovanniss.ti20@utsjr.edu.mx")) {
+      Navigator.pushReplacementNamed(context, 'admin');
+    } else {
+      Navigator.pushReplacementNamed(context, 'home');
+    }
+  } on FirebaseAuthException catch (e) {
+    Navigator.pop(context); 
+    if(e.code == 'channel-error'){
+        _isEmpty();
+      }
+    if (e.code == 'user-not-found') {
+      _correoInva();
+    } else if (e.code == 'wrong-password') {
+      _passInva();
+    } else if (e.code == 'invalid-email') {
+      _fomatInco();
+    } else {
+      _probRed(); 
+    }
   }
+}
+
 
   void _isEmpty(){
     showDialog(

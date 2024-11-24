@@ -5,9 +5,10 @@ import 'package:wolf_sport/pages/auth_page.dart';
 import 'package:wolf_sport/pages/home_page.dart';
 import 'package:wolf_sport/pages/login_page.dart';
 import 'package:wolf_sport/services/alumno_service.dart';
+import 'package:wolf_sport/services/formulario_data_service.dart';  
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(AppState());
 }
@@ -19,7 +20,8 @@ class AppState extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AlumnoService())
+        ChangeNotifierProvider(create: (_) => AlumnoService()),  
+        ChangeNotifierProvider(create: (_) => FormularioDataService()),  
       ],
       child: MyApp(),
     );

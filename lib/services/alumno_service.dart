@@ -1,33 +1,29 @@
-//simport 'dart:io';
-import 'package:flutter/material.dart';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:wolf_sport/models/alumno.dart';
 import 'package:wolf_sport/models/categoria.dart';
 
-class AlumnoService extends ChangeNotifier{
-  
+class AlumnoService extends ChangeNotifier {
   final String _baseUrl = "wolf-sport-default-rtdb.firebaseio.com";
   final List<Alumno> alumnosInfantil = [];
   final List<Alumno> alumnosJunior = [];
   final List<Categoria> categorias = [];
 
-  bool isLoading=true;
-  bool isSaving =false;
+  bool isLoading = true;
+  bool isSaving = false;
 
-  //Alumno? alumnoSeleccionado;
-
-  AlumnoService(){
+  AlumnoService() {
     obtenerCategorias();
     obtenerAlumnos();
     obtenerAlumnosJunior();
   }
 
-  //funcion para obtener categorias
-  Future obtenerCategorias() async{
+  // Función para obtener categorías
+  Future obtenerCategorias() async {
     this.isLoading = true;
     notifyListeners();
-    final url = Uri.https(_baseUrl,'/.json');
+    final url = Uri.https(_baseUrl, '/.json');
     final resp = await http.get(url);
 
     print(url);
@@ -45,12 +41,12 @@ class AlumnoService extends ChangeNotifier{
     return categorias;
   }
 
-  //obtener alumnos
-  Future obtenerAlumnos() async{
+  // Obtener alumnos categoría Infantil
+  Future obtenerAlumnos() async {
     isLoading = true;
     notifyListeners();
-    
-    final url = Uri.https(_baseUrl,'infantil/alumnos.json');
+
+    final url = Uri.https(_baseUrl, 'infantil/alumnos.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
@@ -65,12 +61,12 @@ class AlumnoService extends ChangeNotifier{
     return alumnosInfantil;
   }
 
-  //obtener alumnos categoria Junior
-  Future obtenerAlumnosJunior() async{
+  // Obtener alumnos categoría Junior
+  Future obtenerAlumnosJunior() async {
     isLoading = true;
     notifyListeners();
-    
-    final url = Uri.https(_baseUrl,'junior/alumnos.json');
+
+    final url = Uri.https(_baseUrl, 'junior/alumnos.json');
     final resp = await http.get(url);
 
     final Map<String, dynamic> alumnosMap = jsonDecode(resp.body);
@@ -85,7 +81,7 @@ class AlumnoService extends ChangeNotifier{
     return alumnosJunior;
   }
 
-  //Actualizar asistencia
+  // Actualizar asistencia (Infantil)
   Future<String> updateAsistencia(Alumno alumno) async {
     final url = Uri.https(_baseUrl, '/infantil/alumnos/${alumno.id}.json');
     final resp = await http.patch(
@@ -105,7 +101,7 @@ class AlumnoService extends ChangeNotifier{
     }
   }
 
-  //Actualizar asistencia
+  // Actualizar asistencia (Junior)
   Future<String> updateAsistenciaJunior(Alumno alumno) async {
     final url = Uri.https(_baseUrl, '/junior/alumnos/${alumno.id}.json');
     final resp = await http.patch(
@@ -125,31 +121,73 @@ class AlumnoService extends ChangeNotifier{
     }
   }
 
-  //método para crear o actualizar 
-  Future saveOrCreateAlumno (Alumno alumno) async{
+  // Método para crear o actualizar alumno
+  Future saveOrCreateAlumno(Alumno alumno) async {
     isSaving = true;
     notifyListeners();
 
-    if(alumno.id != null){
+    if (alumno.id != null) {
       await updateAsistencia(alumno);
     }
+
     isSaving = false;
     notifyListeners();
   }
 
-  //método para agregar un nuevo alumno
-  /*Future<String> nuevoAlumno(Alumno alumno) async{
-    final url = Uri.https(_baseUrl,'infantil/alumnos.json');
-    final resp = await http.post(url, body: alumno.toJson());
-    final decodedData = json.decode(resp.body);
+  //categoría Infantil
+  Future<String> crearAlumnoInfantil({
+    required String nombre,
+    required String nombreTutor,
+    required String telTutor,
+    required String fNacimiento,
+  }) async {
+    final alumno = Alumno(
+      asistencias: "0",
+      fNacimiento: fNacimiento,
+      nombre: nombre,
+      nombreTutor: nombreTutor,
+      telTutor: telTutor,
+    );
 
-    alumno.id = decodedData['name'];
-    alumnosInfantil.add(alumno);
+    final url = Uri.https(_baseUrl, 'infantil/alumnos.json');
+    final resp = await http.post(url, body: json.encode(alumno.toMap()));
 
-    return alumno.id!;
-  }*/
+    if (resp.statusCode == 200) {
+      final decodedData = json.decode(resp.body);
+      final id = decodedData['name'];
+      print('Alumno Infantil creado');
+      //print('Alumno Infantil creado con ID: $id');
+      return id;
+    } else {
+      throw Exception('Error al crear el alumno Infantil: ${resp.statusCode}');
+    }
+  }
 
+  // ategoría Junior
+  Future<String> crearAlumnoJunior({
+    required String nombre,
+    required String nombreTutor,
+    required String telTutor,
+    required String fNacimiento,
+  }) async {
+    final alumno = Alumno(
+      asistencias: "0",
+      fNacimiento: fNacimiento,
+      nombre: nombre,
+      nombreTutor: nombreTutor,
+      telTutor: telTutor,
+    );
 
+    final url = Uri.https(_baseUrl, 'junior/alumnos.json');
+    final resp = await http.post(url, body: json.encode(alumno.toMap()));
 
-
+    if (resp.statusCode == 200) {
+      final decodedData = json.decode(resp.body);
+      final id = decodedData['name'];
+      print('Alumno Junior creado');
+      return id;
+    } else {
+      throw Exception('Error al crear el alumno Junior: ${resp.statusCode}');
+    }
+  }
 }

@@ -45,83 +45,36 @@ class _CategoriaPageAdminState extends State<CategoriaPageAdmin> {
       body: ( widget.nombreCat == "infantil" ? alumnoService.alumnosInfantil.isNotEmpty : alumnoService.alumnosJunior.isNotEmpty ) ?
       Column(
         children: [
+          const SizedBox(height: 10,),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text("Asistencias",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+              SizedBox(width: 15,)
+            ],
+          ),
            Expanded(
             child: ListView.builder(
               itemCount: widget.nombreCat == "infantil" ? alumnoService.alumnosInfantil.length : alumnoService.alumnosJunior.length,
               itemBuilder: (context, index) {
                 final nombreAl = widget.nombreCat == "infantil" ? alumnoService.alumnosInfantil[index].nombre : alumnoService.alumnosJunior[index].nombre ;
                 final tutorAl = widget.nombreCat == "infantil" ? alumnoService.alumnosInfantil[index].nombreTutor: alumnoService.alumnosJunior[index].nombreTutor;
-                return CheckboxListTile(
-                  checkboxShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)
+                final asistencia = widget.nombreCat == "infantil" ? alumnoService.alumnosInfantil[index].asistencias: alumnoService.alumnosJunior[index].asistencias;
+                return ListTile(
+                  leading: Icon(Icons.person),
+                  title: Text("Alumno: $nombreAl"),
+                  subtitle: Text("Tutor: $tutorAl"),
+                  trailing: Text(
+                    asistencia,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
-                  checkColor: Colors.white,
-                  activeColor:const Color.fromARGB(255, 11, 73, 107),
-                  title: Text('Alumno: $nombreAl'),
-                  subtitle: Text('Nombre del tutor: $tutorAl'),
-                  value: index < estatuscheck.length ? estatuscheck[index] : false,
-                  onChanged: (value) {
-                    setState(() {
-                      estatuscheck[index] = value!;
-                    });
-                    //print("Alumno $nombreAl asistencia: ${estatuscheck[index]}");
-                  },
-                  secondary: const Icon(Icons.person),
                 );
               },
             ),
           ),
-          Container(
-            alignment: Alignment.bottomRight,
-            margin: const EdgeInsets.only(bottom: 20),
-            padding: const EdgeInsets.only(right: 20),
-            child: FloatingActionButton(
-              elevation: 10,
-              splashColor: Colors.white,
-              tooltip: "Enviar lista de asistencia",
-              backgroundColor: const Color.fromARGB(255, 11, 73, 107),
-              child: const Icon(Icons.send_rounded),
-              onPressed: ()async {
-                setState(() {
-                    isLoading = true; 
-                  });
-                if(widget.nombreCat == "infantil"){
-                  for (int i = 0; i < alumnoService.alumnosInfantil.length; i++) {
-                    if(estatuscheck[i]){
-                      int nuevasAsistencias = int.parse(alumnoService.alumnosInfantil[i].asistencias) + 1;
-                      alumnoService.alumnosInfantil[i].asistencias = nuevasAsistencias.toString();
-                      await alumnoService.updateAsistencia(alumnoService.alumnosInfantil[i]);
-                    }
-                  }
-                }else{
-                  for (int i = 0; i < alumnoService.alumnosJunior.length; i++) {
-                    if(estatuscheck[i]){
-                      int nuevasAsistencias = int.parse(alumnoService.alumnosJunior[i].asistencias) + 1;
-                      alumnoService.alumnosJunior[i].asistencias = nuevasAsistencias.toString();
-                      await alumnoService.updateAsistenciaJunior(alumnoService.alumnosJunior[i]);
-                    }
-                  }
-                }
-                estatuscheck.every((element) => !element)
-                ?
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Lista de asistencia en blanco')),
-                )
-                :
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Lista de asistencia enviada con éxito')),
-                ); 
-                setState(() {
-                  isLoading = false;
-                  if(widget.nombreCat == "infantil"){
-                    estatuscheck = List<bool>.filled(alumnoService.alumnosInfantil.length, false);
-                  }else{
-                    estatuscheck = List<bool>.filled(alumnoService.alumnosJunior.length, false);
-                  }
-                });
-              },
-            )
-          )
         ],
       ):const Text("No hay alumnos"),
     );

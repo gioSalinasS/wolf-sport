@@ -81,7 +81,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
               splashColor: Colors.white,
               tooltip: "Enviar lista de asistencia",
               backgroundColor: const Color.fromARGB(255, 11, 73, 107),
-              child: const Icon(Icons.send_rounded),
+              child: const Icon(Icons.send_rounded,color: Colors.white,),
               onPressed: ()async {
                 setState(() {
                     isLoading = true; 

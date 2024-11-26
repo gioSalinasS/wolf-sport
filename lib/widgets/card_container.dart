@@ -34,7 +34,7 @@ class _CardContainerState extends State<CardContainer> {
     String email = userCredential.user!.email ?? "";
     if (email.contains("giovanniss.ti20@utsjr.edu.mx")) {
       Navigator.pushReplacementNamed(context, 'admin');
-    } else {
+    } else if(email.contains("noeca.ti23@utsjr.edu.mx")){
       Navigator.pushReplacementNamed(context, 'home');
     }
   } on FirebaseAuthException catch (e) {

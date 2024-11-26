@@ -137,7 +137,8 @@ class _HomePageAdminState extends State<HomePageAdmin> {
           }
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
+          backgroundColor: const Color.fromARGB(255, 11, 73, 107),
+          child: const Icon(Icons.add,color: Colors.white,),
           onPressed: () {
             Navigator.push(
               context,

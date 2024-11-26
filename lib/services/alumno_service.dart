@@ -6,8 +6,8 @@ import 'package:wolf_sport/models/categoria.dart';
 
 class AlumnoService extends ChangeNotifier {
   final String _baseUrl = "wolf-sport-default-rtdb.firebaseio.com";
-  final List<Alumno> alumnosInfantil = [];
-  final List<Alumno> alumnosJunior = [];
+  List<Alumno> alumnosInfantil = [];
+  List<Alumno> alumnosJunior = [];
   final List<Categoria> categorias = [];
 
   bool isLoading = true;
@@ -43,6 +43,7 @@ class AlumnoService extends ChangeNotifier {
 
   // Obtener alumnos categoría Infantil
   Future obtenerAlumnos() async {
+    alumnosInfantil=[];
     isLoading = true;
     notifyListeners();
 
@@ -63,6 +64,7 @@ class AlumnoService extends ChangeNotifier {
 
   // Obtener alumnos categoría Junior
   Future obtenerAlumnosJunior() async {
+    alumnosJunior=[];
     isLoading = true;
     notifyListeners();
 

@@ -22,8 +22,8 @@ class _CategoriaPageAdminState extends State<CategoriaPageAdmin> {
     super.initState();
     print(widget.nombreCat);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final alumnoService = Provider.of<AlumnoService>(context, listen: false);
       setState(() {
+        final alumnoService = Provider.of<AlumnoService>(context, listen: false);
         if(widget.nombreCat == "infantil"){
           estatuscheck = List<bool>.filled(alumnoService.alumnosInfantil.length, false);
         }else{

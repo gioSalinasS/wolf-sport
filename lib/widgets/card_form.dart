@@ -32,6 +32,7 @@ class _CardFormState extends State<CardForm> {
 
   @override
   Widget build(BuildContext context) {
+    final alumnoSer = Provider.of<AlumnoService>(context);
     return Card(
       elevation: 0,
       color: Colors.transparent,
@@ -92,6 +93,12 @@ class _CardFormState extends State<CardForm> {
                         telTutor: formulario.telefonoTutor,
                         fNacimiento: "${formulario.fechaNacimiento}",
                       ).then((id) {
+                        setState(() {
+                          _nombreCompletoController.clear();
+                          _nombreTutorController.clear();
+                          _fechaNacimientoController.clear();
+                          _telefonoTutorController.clear();
+                        });
                         showSnackBar(context, "Alumno de la categoria Infantil creado exitosamente.");
                       }).catchError((error) {
                         showSnackBar(context, "Error al crear el alumno Infantil");
@@ -103,12 +110,20 @@ class _CardFormState extends State<CardForm> {
                         telTutor: formulario.telefonoTutor,
                         fNacimiento: "${formulario.fechaNacimiento}",
                       ).then((id) {
+                        setState(() {
+                          _nombreCompletoController.clear();
+                          _nombreTutorController.clear();
+                          _fechaNacimientoController.clear();
+                          _telefonoTutorController.clear();
+                        });
                         showSnackBar(context, "Alumno de la categoria Junior creado exitosamente.");
                       }).catchError((error) {
                         showSnackBar(context, "Error al crear el alumno Junior");
                       });
                     }
                   }
+                  alumnoSer.obtenerAlumnos();
+                  alumnoSer.obtenerAlumnosJunior();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF0070F0), 
